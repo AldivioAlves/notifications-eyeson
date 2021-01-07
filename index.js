@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 
-const job = new CronJob('*/30 * * * * *', () => {
+const job = new CronJob('* */2 * * * *', () => {
     notifications
     .sendToTopic(
         'sync', // device fcm tokens...
