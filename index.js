@@ -32,7 +32,9 @@ const sendNotifications = (req, res) => {
     const { notebookUuid, userName, notebookName, userToken } = req.body
     const message = {
         topic: notebookUuid,
-        data: {},
+        data: {
+        uuid:notebookUuid
+        },
         notification: {
             title: "Nova mensagem",
             body: `${userName} enviou uma nova mensagem no caderno ${notebookName}.`
