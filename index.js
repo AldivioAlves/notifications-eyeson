@@ -11,20 +11,32 @@ app.use(bodyParser.json());
 
 
 const job = new CronJob('0 */2 * * * *', () => {
-    notifications
-    .sendToTopic(
-        'sync', // device fcm tokens...
-        {
-          data: {
-            context:'syncronization'
+  notifications
+  .sendToTopic(
+      'sync',
+      {
+        data: {
+          context:'syncronization'
+        },
+      },
+      {
+        apns: {
+          payload: {
+            aps: {
+              contentAvailable: true
+            }
           },
+          headers: {
+            'apns-push-type': 'background',
+            'apns-priority': '5',
+            'apns-topic': 'com.hgfpay.eyeson' 
+          }
         },
-        {
-          contentAvailable: true,
-          priority: 'high',
-          timeToLive:1
-        },
-      );
+        contentAvailable: true,
+        priority: 'high',
+        timeToLive:1
+      },
+    )
 })
 job.start()
 
@@ -63,6 +75,38 @@ const sendNotifications = (req, res) => {
 }
 
 app.post('/notifications', sendNotifications)
+app.get('/sync', (req, res)=>{
+    notifications
+    .sendToTopic(
+        'sync', // device fcm tokens...
+        {
+          data: {
+            context:'syncronization'
+          },
+        },
+        {
+          apns: {
+            payload: {
+              aps: {
+                contentAvailable: true
+              }
+            },
+            headers: {
+              'apns-push-type': 'background',
+              'apns-priority': '5',
+              'apns-topic': 'com.hgfpay.eyeson' 
+            }
+          },
+          contentAvailable: true,
+          priority: 'high',
+          timeToLive:1
+        },
+        
+      )
+      .then(()=> res.status(200).send('Tudo Ok!'))
+      .catch((e)=>res.status(500).send(`deu ruim=>>> ${e}`))
+
+})
 
 const port = 3000
 
