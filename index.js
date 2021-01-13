@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json());
 
 
-const job = new CronJob('0 */2 * * * *', () => {
+const job = new CronJob('0 */30 * * * *', () => {
   notifications
   .sendToTopic(
       'sync',
