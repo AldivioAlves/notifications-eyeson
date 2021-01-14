@@ -11,6 +11,7 @@ app.use(bodyParser.json());
 
 
 const job = new CronJob('0 */30 * * * *', () => {
+    console.log("sincronização em: ", new Date())
   notifications
   .sendToTopic(
       'sync',
