@@ -75,6 +75,11 @@ const sendNotifications = (req, res) => {
 }
 
 app.post('/notifications', sendNotifications)
+
+app.get('/wakeup', (req, res)=>{
+    res.status(200).send("serviço ativo.")
+ })
+
 app.get('/sync', (req, res)=>{
     notifications
     .sendToTopic(
