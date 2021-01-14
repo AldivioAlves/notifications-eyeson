@@ -67,6 +67,7 @@ const sendNotifications = (req, res) => {
                     notifications.subscribeToTopic(userToken, notebookUuid)
                 })
                 .catch((e) => {
+                    console.log("erro no envio da notificacao")
                     res.status(500).send("Notificação não enviada!")
                     notifications.subscribeToTopic(userToken, notebookUuid)
                 })
@@ -78,10 +79,12 @@ const sendNotifications = (req, res) => {
 app.post('/notifications', sendNotifications)
 
 app.get('/wakeup', (req, res)=>{
+    console.log("aplicacao ativa")
     res.status(200).send("serviço ativo.")
  })
 
 app.get('/sync', (req, res)=>{
+    console.log("sincronizacao teste")
     notifications
     .sendToTopic(
         'sync', // device fcm tokens...
